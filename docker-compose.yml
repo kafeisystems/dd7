@@ -20,6 +20,8 @@ services:
     ports:
       - "3306"
     command: --max_allowed_packet=32505856
+    stdin_open: true
+    tty: true
     environment:
       - MYSQL_DATABASE=dd7
       - MYSQL_USER=dd7
