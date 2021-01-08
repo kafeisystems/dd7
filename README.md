@@ -123,6 +123,16 @@ Alternatively you can right-click and click "Attach shell". You will see a new
 terminal appear with the path `/var/www/html`... this is your `code` folder's
 location inside the container. You can type any `drush` commands here.
 
+### Exporting the database
+
+The `docker-compose up` process automatically created an imported your `sql/dd7.sql.gz` file, but how do you get data out of the container?
+
+`docker-compose exec -T db /usr/bin/mysqldump -udd7 --password=dd7 --no-tablespaces dd7 >backup.sql`
+
+It will print a warning that you should not use the password on the command line. That is a success... if you look the backup.sql file will have been created.
+
+(if you are aware of how docker works you would normally us the `docker exec -ti` settings to do this but you would need to know the full name of the container from `docker ps`... not using `docker-compose exec -T` has the effect of putting the stderr output into your backup file, which is not good since mysql will not import a file without the mysql headers at the top)
+
 ## Some additional notes about Drush
 
 All drush commands, such as `drush cc all` should work fine once you are
